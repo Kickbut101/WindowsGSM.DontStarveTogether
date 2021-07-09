@@ -20,7 +20,7 @@ namespace WindowsGSM.Plugins
             name = "WindowsGSM.DontStarveTogether", // WindowsGSM.XXXX
             author = "Andy",
             description = "🧩 WindowsGSM plugin for supporting Don't Starve Together Dedicated Server",
-            version = "1.1",
+            version = "1.2",
             url = "https://github.com/Kickbut101/WindowsGSM.DontStarveTogether", // Github repository link (Best practice)
             color = "#800080"
         };
@@ -92,6 +92,9 @@ namespace WindowsGSM.Plugins
             param.Append(string.IsNullOrWhiteSpace(_serverData.ServerMaxPlayer) ? string.Empty : $" -players {_serverData.ServerMaxPlayer}");
             param.Append(string.IsNullOrWhiteSpace(_serverData.ServerParam) ? string.Empty : $" {_serverData.ServerParam}");
 
+            // Output the startupcommands used. Helpful for troubleshooting server commands and testing them out - leaving this in because it's helpful af.
+            var startupCommandsOutputTxtFile = ServerPath.GetServersServerFiles(_serverData.ServerID, "startupCommandsUsed.log");
+            File.WriteAllText(startupCommandsOutputTxtFile, $"{param}");
 
             // Prepare Process
             var p = new Process
